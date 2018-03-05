@@ -20,13 +20,13 @@ public class DBRepositoryPostgresTest {
     @BeforeClass
     public void setUpClass() throws Exception {
         jdbcTemplate = getStandardTemplate();
-        createTestTables();
     }
 
     @BeforeMethod
     public void setUp() throws Exception {
         repositoryPostgres = new DBRepositoryPostgres(jdbcTemplate);
-    }
+        createTestTables();
+}
 
     @Test
     public void testGetAllTableNames() {
@@ -58,25 +58,15 @@ public class DBRepositoryPostgresTest {
         assertFalse(table234, "table234 should be absent");
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() throws Exception {
         deleteTestTables();
     }
 
     private void createTestTables() {
-        // FIXME: 01.03.2018 Переделать на транзакции
-        try {
-            jdbcTemplate.execute("CREATE TABLE public.table1(id serial, name text)");
-        } catch (Exception ignored) {
-        }
-        try {
-            jdbcTemplate.execute("CREATE TABLE public.table2(id serial, name text)");
-        } catch (Exception ignored) {
-        }
-        try {
-            jdbcTemplate.execute("CREATE TABLE public.table3(id serial, name text)");
-        } catch (Exception ignored) {
-        }
+        createTestTable("table1");
+        createTestTable("table2");
+        createTestTable("table3");
     }
 
     private void deleteTestTables() {
@@ -84,6 +74,13 @@ public class DBRepositoryPostgresTest {
         deleteTestTable("table2");
         deleteTestTable("table3");
         deleteTestTable("createTable");
+    }
+
+    private void createTestTable(String tableName){
+        try {
+            jdbcTemplate.execute("CREATE TABLE public.\"" + tableName + "\"(id serial, name text)");
+        } catch (Exception ignored) {
+        }
     }
 
     private void deleteTestTable(String tableName) {
