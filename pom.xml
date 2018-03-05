@@ -11,6 +11,7 @@
 
     <modules>
         <module>jdbclib</module>
+        <module>concurrent_util</module>
     </modules>
 
 </project>
