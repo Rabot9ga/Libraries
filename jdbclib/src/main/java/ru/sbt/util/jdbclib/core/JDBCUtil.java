@@ -1,5 +1,7 @@
 package ru.sbt.util.jdbclib.core;
 
+
+import ru.sbt.util.concurrent_util.ConcurrentUtil;
 import ru.sbt.util.jdbclib.DatabaseInterface.DBRepository;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +14,7 @@ public class JDBCUtil {
 
     public static JDBCMethods getConnection(String s) {
         // TODO: 01.03.2018 Запилить многопоточность!
-        return new JDBCMethodsImpl(dbRepository, batchSender);
+        //        return new JDBCMethodsImpl(dbRepository, batchSender);
+        return null;
     }
 }

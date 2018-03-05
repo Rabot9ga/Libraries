@@ -1,0 +1,90 @@
+buildscript {
+repositories {
+        maven {
+            url 'http://pprb-oip-tn-4.ca.sbrf.ru:8081/artifactory/atrifactory-gradle-repo'
+        }
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.6.2"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'maven-publish'
+
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+    apply plugin: "com.jfrog.artifactory"
+
+
+    sourceCompatibility = 1.8
+
+    group 'ru.sbt.util'
+
+
+    repositories {
+        maven {
+            url 'http://pprb-oip-tn-4.ca.sbrf.ru:8081/artifactory/atrifactory-gradle-repo'
+        }
+    }
+
+    dependencies {
+        compileOnly'org.projectlombok:lombok:1.16.18'
+
+        testCompileOnly 'org.projectlombok:lombok:1.16.18'
+        testCompile 'org.testng:testng:6.9.9'
+        testCompile 'org.mockito:mockito-core:2.15.0'
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourcesJar
+    }
+
+    test {
+        useTestNG()
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact(sourcesJar) {
+                    classifier = 'sources'
+                }
+            }
+        }
+    }
+
+    artifactory {
+        contextUrl = "${artifactory_contextUrl}"
+        //The base Artifactory URL if not overridden by the publisher/resolver
+
+        publish {
+            repository {
+                repoKey = 'ontar-repo'
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+
+            }
+            defaults {
+                publications('mavenJava')
+                publishArtifacts = true
+                publishPom = true
+            }
+        }
+    }
+}

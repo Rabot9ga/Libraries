@@ -32,8 +32,8 @@ public class JDBCMethodsImplTest {
                 .addColumn("column3", ColumnType.BIGINTEGER, "1354");
 
 
-        JDBCMethodsImpl jdbcMethodsImpl = new JDBCMethodsImpl(dbRepository, batchSender);
-        jdbcMethodsImpl.insertInTable("JDBCTestTable", jdbcPojo);
+//        JDBCMethodsImpl jdbcMethodsImpl = new JDBCMethodsImpl(dbRepository, batchSender);
+//        jdbcMethodsImpl.insertInTable("JDBCTestTable", jdbcPojo);
 
 
     }

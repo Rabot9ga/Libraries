@@ -1,3 +1,5 @@
+package ru.sbt.util.concurrent_util;
+
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;

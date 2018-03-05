@@ -1,0 +1,14 @@
+version '0.0.1'
+
+dependencies {
+    compile project(':concurrent_util')
+//    compile 'ru.sbt.util:concurrent_util:0.0.1'
+    compile 'org.slf4j:slf4j-api:1.7.24'
+    compile 'org.postgresql:postgresql:42.2.1'
+    compile 'com.zaxxer:HikariCP:2.7.7'
+    compile 'org.springframework:spring-jdbc:5.0.4.RELEASE'
+
+    testCompile 'ch.qos.logback:logback-classic:1.2.3'
+
+
+}
