@@ -57,6 +57,17 @@ public class BatchSenderTest {
         verify(dbRepository, after(400).atLeastOnce()).writeBatchInDB(jdbcPojos.subList(100, 199));
     }
 
+    @Test
+    public void testFlush() throws Exception {
+        List<JDBCPojo> jdbcPojos = getJdbcPojos(10);
+
+        BatchSender batchSender = new BatchSender(100, 300, TimeUnit.MILLISECONDS, dbRepository);
+        jdbcPojos.forEach(batchSender::put);
+        batchSender.flush();
+
+        verify(dbRepository).writeBatchInDB(jdbcPojos);
+    }
+
     private List<JDBCPojo> getJdbcPojos(int num) {
         return IntStream.range(0, num)
                 .mapToObj(value -> JDBCPojoFactory.getPojo().addColumn("id", ColumnType.INTEGER, String.valueOf(value)))

@@ -56,4 +56,8 @@ public class BatchSender {
             throw new RuntimeException(e);
         }
     }
+
+    public void flush() {
+        writeInDB();
+    }
 }
