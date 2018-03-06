@@ -24,7 +24,7 @@ public class BatchSenderTest {
     @Test
     public void testPutBatch() {
         TestInterface testInterface = mock(TestInterface.class);
-        BatchConsumer batchConsumer = new BatchConsumer<String>(100, 10, TimeUnit.SECONDS, testInterface::testMethod);
+        BatchConsumer batchConsumer = new BatchConsumer<String>(testInterface::testMethod, 100, 10, TimeUnit.SECONDS);
         List<String> stringList = getStrings(100);
 
         stringList.forEach(batchConsumer::put);
@@ -35,7 +35,7 @@ public class BatchSenderTest {
     @Test
     public void testPutSome() {
         TestInterface testInterface = mock(TestInterface.class);
-        BatchConsumer batchConsumer = new BatchConsumer<String>(100, 300, TimeUnit.MILLISECONDS, testInterface::testMethod);
+        BatchConsumer batchConsumer = new BatchConsumer<String>(testInterface::testMethod, 100, 300, TimeUnit.MILLISECONDS);
         List<String> stringList = getStrings(10);
 
         stringList.forEach(batchConsumer::put);
@@ -47,7 +47,7 @@ public class BatchSenderTest {
     public void testPutExtraBatch() {
         TestInterface testInterface = mock(TestInterface.class);
         List<String> stringList = getStrings(199);
-        BatchConsumer batchConsumer = new BatchConsumer<String>(100, 300, TimeUnit.MILLISECONDS, testInterface::testMethod);
+        BatchConsumer batchConsumer = new BatchConsumer<String>(testInterface::testMethod, 100, 300, TimeUnit.MILLISECONDS);
 
         stringList.forEach(batchConsumer::put);
 
@@ -59,7 +59,7 @@ public class BatchSenderTest {
     public void testFlush() {
         TestInterface testInterface = mock(TestInterface.class);
         List<String> stringList = getStrings(10);
-        BatchConsumer batchConsumer = new BatchConsumer<String>(100, 300, TimeUnit.MILLISECONDS, testInterface::testMethod);
+        BatchConsumer batchConsumer = new BatchConsumer<String>(testInterface::testMethod, 100, 300, TimeUnit.MILLISECONDS);
 
         stringList.forEach(batchConsumer::put);
         batchConsumer.flush();
