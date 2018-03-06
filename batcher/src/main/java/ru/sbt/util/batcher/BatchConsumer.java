@@ -1,5 +1,6 @@
 package ru.sbt.util.batcher;
 
+import lombok.ToString;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import java.util.ArrayList;
@@ -7,7 +8,8 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
-public class BatchSender<T> {
+@ToString
+public class BatchConsumer<T> {
 
     private BlockingQueue<T> queue;
     private int batchSize;
@@ -17,11 +19,11 @@ public class BatchSender<T> {
     private Consumer<List<T>> consumer;
 
 
-    public BatchSender(Consumer<List<T>> consumer) {
-        this(2000, 1, TimeUnit.SECONDS, consumer);
+    public BatchConsumer(Consumer<List<T>> consumer) {
+        this(consumer, 2000, 1, TimeUnit.SECONDS);
     }
 
-    public BatchSender(int batchSize, long timePeriod, TimeUnit timeUnitBatch, Consumer<List<T>> consumer) {
+    public BatchConsumer(Consumer<List<T>> consumer, int batchSize, long timePeriod, TimeUnit timeUnitBatch) {
         this.batchSize = batchSize;
         this.timeUnitBatch = timeUnitBatch;
         this.timePeriod = timePeriod;
@@ -36,14 +38,6 @@ public class BatchSender<T> {
         service.scheduleAtFixedRate(this::writeInDB, timePeriod, timePeriod, timeUnitBatch);
     }
 
-    private void writeInDB() {
-        ArrayList<T> list = new ArrayList<>();
-        queue.drainTo(list);
-
-        consumer.accept(list);
-    }
-
-
     public void put(T newElement) {
         putInQueue(newElement);
 
@@ -51,6 +45,14 @@ public class BatchSender<T> {
             service.submit(this::writeInDB);
         }
     }
+
+    private void writeInDB() {
+        ArrayList<T> list = new ArrayList<>();
+        queue.drainTo(list);
+
+        consumer.accept(list);
+    }
+
 
     private void putInQueue(T newElement) {
         try {

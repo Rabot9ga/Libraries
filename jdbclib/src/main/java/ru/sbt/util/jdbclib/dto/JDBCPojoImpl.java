@@ -1,16 +1,25 @@
 package ru.sbt.util.jdbclib.dto;
 
 import lombok.Data;
-import ru.sbt.util.jdbclib.util.MoreCollectors;
+import one.util.streamex.StreamEx;
+import ru.sbt.util.jdbclib.util.MyCollectors;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static ru.sbt.util.jdbclib.util.MyCollectors.*;
+import static ru.sbt.util.jdbclib.util.MyCollectors.toLinkedMap;
+
 @Data
 public class JDBCPojoImpl implements JDBCPojo {
     private List<Column> columnList = new ArrayList<>();
+
+    public JDBCPojoImpl() {
+
+    }
 
     @Override
     public JDBCPojo addColumn(String name, ColumnType type, String value) {
@@ -19,19 +28,39 @@ public class JDBCPojoImpl implements JDBCPojo {
     }
 
     @Override
+    public JDBCPojo addColumnId(String name) {
+        columnList.add(new Column(name, ColumnType.SERIAL, null));
+        return this;
+    }
+
+    @Override
     public Map<String, ColumnType> getSchema() {
-        return columnList.stream().collect(MoreCollectors.toLinkedMap(o -> o.name, o -> o.type));
+        return columnList.stream().collect(toLinkedMap(o -> o.name, o -> o.type));
     }
 
     @Override
-    public Map<String, String> getData() {
-        return null;
+    public Map<String, String> getSchema(Function<ColumnType, String> function) {
+        return columnList.stream().collect(toLinkedMap(o -> o.name, o -> function.apply(o.type)));
     }
 
     @Override
-    public Map<String, String> getData(Function<ColumnType, String> function) {
+    public Map<String, String> getColumnValue() {
+        return StreamEx.of(columnList).toMap(column -> column.name, column -> column.value);
+    }
 
-        return null;
+    @Override
+    public Map<String, String> getColumnValueWithoutSerialType() {
+        return StreamEx.of(columnList)
+                .filter(column -> column.type != ColumnType.SERIAL)
+                .peek(this::columnValueStringReplace)
+                .collect(toLinkedMap(column -> column.name, column -> column.value));
+    }
+
+    private Column columnValueStringReplace(Column column) {
+        if (column.type == ColumnType.TEXT) {
+            column.value = "\'" + column.value + "\'";
+        }
+        return column;
     }
 
 
