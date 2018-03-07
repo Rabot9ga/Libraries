@@ -1,17 +1,14 @@
 package ru.sbt.util.jdbclib.DatabaseInterface;
 
 import lombok.extern.slf4j.Slf4j;
-import one.util.streamex.EntryStream;
 import one.util.streamex.StreamEx;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.sbt.util.jdbclib.dto.ColumnType;
 import ru.sbt.util.jdbclib.dto.JDBCPojo;
-import ru.sbt.util.jdbclib.util.MyCollectors;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -100,28 +97,4 @@ public class DBRepositoryPostgres implements DBRepository {
         return format;
     }
 
-
-    private String getQueryToInsert(String tableName, Map<String, ColumnType> schema) {
-        StringBuilder builderQuery = new StringBuilder("INSERT INTO public.\"");
-        builderQuery.append(tableName);
-        builderQuery.append("\" ");
-
-        StringJoiner stringJoiner = new StringJoiner(", ", "(", ")");
-        schema.forEach((s, s2) -> stringJoiner.add("\"" + s + "\""));
-
-        builderQuery.append(stringJoiner.toString());
-        builderQuery.append(" VALUES ");
-
-        StringJoiner valueJoiner = new StringJoiner(", ", "(", ")");
-        for (int i = 0; i < schema.size(); i++) {
-            valueJoiner.add("?");
-        }
-        builderQuery.append(valueJoiner.toString());
-        builderQuery.append(";");
-        return builderQuery.toString();
-    }
-
-    private void prepareStatement(JDBCPojo jdbcPojo, Map<String, ColumnType> schemaWithoutId) {
-
-    }
 }

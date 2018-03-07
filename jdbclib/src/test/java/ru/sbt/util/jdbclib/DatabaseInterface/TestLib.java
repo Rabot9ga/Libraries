@@ -4,20 +4,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.sbt.util.jdbclib.core.JDBCUtil;
-import ru.sbt.util.jdbclib.dto.ColumnType;
 import ru.sbt.util.jdbclib.dto.JDBCPojo;
-import ru.sbt.util.jdbclib.dto.JDBCPojoFactory;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
+import java.util.concurrent.TimeUnit;
 
-import static java.util.stream.Collectors.toList;
 import static org.testng.Assert.assertEquals;
 
 public class TestLib extends AbstractDBRepositoryTest {
@@ -66,13 +61,31 @@ public class TestLib extends AbstractDBRepositoryTest {
         for (int i = 0; i < iterations; i++) {
             JDBCPojo jdbcPojo = getJdbcPojo();
             JDBCUtil.getConnection("jdbc:postgresql://10.116.179.49:5432/ForIntegrationTest", "tester", "123456")
-                    .insertInTable("testJDBCTable", jdbcPojo);
+                    .insertInTable(tableName, jdbcPojo);
         }
         JDBCUtil.flush();
 
         String sql = String.format("SELECT * FROM public.\"%s\"", tableName);
         List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
         assertEquals(mapList.size(), iterations, "expected "+ iterations + " rows");
+    }
+
+    @Test
+    public void testLibWithCustomBatchIT() throws Exception {
+        int iterations = 10_000;
+
+        for (int i = 0; i < iterations; i++) {
+            JDBCPojo jdbcPojo = getJdbcPojo();
+            JDBCUtil.getConnection("jdbc:postgresql://10.116.179.49:5432/ForIntegrationTest", "tester", "123456",
+                    3000, 2, TimeUnit.SECONDS)
+                    .insertInTable(tableName, jdbcPojo);
+        }
+        JDBCUtil.flush();
+        TimeUnit.SECONDS.sleep(1);
+
+        String sql = String.format("SELECT * FROM public.\"%s\"", tableName);
+        List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
+        assertEquals(mapList.size(), iterations, "expected " + iterations + " rows");
     }
 
     @AfterMethod
