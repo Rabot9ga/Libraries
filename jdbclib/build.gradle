@@ -1,5 +1,13 @@
 version '0.0.1'
 
+test {
+    exclude('**/DatabaseInterface/**')
+}
+
+task integrationTest(type: Test, dependsOn: test) {
+    include('**/jdbclib/DatabaseInterface/**')
+}
+
 dependencies {
     compile project(':concurrent_util')
     compile project(':batcher')

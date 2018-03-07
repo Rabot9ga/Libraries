@@ -47,10 +47,11 @@ public class TestLib extends AbstractDBRepositoryTest {
         }
         countDownLatch.await();
         JDBCUtil.flush();
+        TimeUnit.SECONDS.sleep(1);
 
         String sql = String.format("SELECT * FROM public.\"%s\"", tableName);
         List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
-        assertEquals(mapList.size(), iterations, "expected "+ iterations + " rows");
+        assertEquals(mapList.size(), iterations, "expected " + iterations + " rows");
     }
 
 
@@ -64,10 +65,11 @@ public class TestLib extends AbstractDBRepositoryTest {
                     .insertInTable(tableName, jdbcPojo);
         }
         JDBCUtil.flush();
+        TimeUnit.SECONDS.sleep(1);
 
         String sql = String.format("SELECT * FROM public.\"%s\"", tableName);
         List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
-        assertEquals(mapList.size(), iterations, "expected "+ iterations + " rows");
+        assertEquals(mapList.size(), iterations, "expected " + iterations + " rows");
     }
 
     @Test
