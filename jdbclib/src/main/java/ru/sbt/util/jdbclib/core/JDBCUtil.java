@@ -32,10 +32,10 @@ public class JDBCUtil {
         Supplier<DBRepository> repositorySupplier = () -> DBRepositoryFactory.getRepository(url, user, password);
         DBRepository dbRepository = ConcurrentUtil.putInMap(dbRepositoryMap, url, repositorySupplier);
 
-        return new JDBCMethodsImpl(tableBatchSender,dbRepository, batchSize, timePeriod, timeUnit);
+        return new JDBCMethodsImpl(tableBatchSender, dbRepository, batchSize, timePeriod, timeUnit);
     }
 
-    public static void flush(){
+    public static void flush() {
         StreamEx.ofValues(tableBatchSender).forEach(BatchConsumer::flush);
     }
 
