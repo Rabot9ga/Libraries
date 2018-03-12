@@ -14,6 +14,7 @@ public class ReportSender {
     private static ConcurrentHashMap<String, Transaction> transactionMap = new ConcurrentHashMap<>();
     private static final SecureRandom randomUid = new SecureRandom();
 
+
     public static void startTransaction(String scriptName, String uid) {
         String lowerCaseScriptName = scriptName.toLowerCase();
         Transaction transaction = new Transaction(
