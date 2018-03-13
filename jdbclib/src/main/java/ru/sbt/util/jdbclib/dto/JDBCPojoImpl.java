@@ -2,15 +2,12 @@ package ru.sbt.util.jdbclib.dto;
 
 import lombok.Data;
 import one.util.streamex.StreamEx;
-import ru.sbt.util.jdbclib.util.MyCollectors;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static ru.sbt.util.jdbclib.util.MyCollectors.*;
 import static ru.sbt.util.jdbclib.util.MyCollectors.toLinkedMap;
 
 @Data
@@ -70,7 +67,7 @@ public class JDBCPojoImpl implements JDBCPojo {
         String value;
 
         public Column(String name, ColumnType type, String value) {
-            this.name = name;
+            this.name = name.toLowerCase();
             this.type = type;
             this.value = value;
         }
