@@ -27,18 +27,20 @@ public class Scheduler {
         @SerializedName("Hours")
         private Integer hours;
     }
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+
+    @AllArgsConstructor
     public class StartGroup extends Action {
         @SerializedName("Type")
         private String type;
     }
 
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor
     public class Initialize extends Action {
         @SerializedName("Type")
         private String type;
     }
 
+    @AllArgsConstructor
     public class StartVusers extends Action {
         @SerializedName("Type")
         private String type;
@@ -46,6 +48,7 @@ public class Scheduler {
         private String vusers;
     }
 
+    @AllArgsConstructor
     public class Duration extends Action {
         @SerializedName("Type")
         private String type;
@@ -54,6 +57,7 @@ public class Scheduler {
         private TimeInterval timeInterval;
     }
 
+    @AllArgsConstructor
     public class StopVusers extends Action {
         @SerializedName("Type")
         private String type;
@@ -61,6 +65,5 @@ public class Scheduler {
         @SerializedName("Ramp")
         private Ramp ramp;
     }
-
 }
 

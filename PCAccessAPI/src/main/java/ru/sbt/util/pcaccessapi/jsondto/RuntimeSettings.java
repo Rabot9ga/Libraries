@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class RuntimeSettings {
 
     @SerializedName("Pacing")
@@ -23,7 +23,7 @@ public class RuntimeSettings {
 
     @Getter
     @ToString
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor
     public static class Log {
 
         @SerializedName("Type")
@@ -43,7 +43,7 @@ public class RuntimeSettings {
 
         @Getter
         @ToString
-        @AllArgsConstructor(access = AccessLevel.PRIVATE)
+        @AllArgsConstructor
         public static class Options {
 
             @SerializedName("Type")
@@ -52,7 +52,7 @@ public class RuntimeSettings {
             @SerializedName("CacheSize")
             private Integer cacheSize;
 
-            @AllArgsConstructor(access = AccessLevel.PRIVATE)
+            @AllArgsConstructor
             public enum Type {
                 @SerializedName("on error")
                 ON_ERROR("on error");
@@ -67,7 +67,7 @@ public class RuntimeSettings {
 
         }
 
-        @AllArgsConstructor(access = AccessLevel.PRIVATE)
+        @AllArgsConstructor
         public enum Type {
             @SerializedName("extended")
             EXTENDED("extended");
@@ -83,7 +83,7 @@ public class RuntimeSettings {
 
     @Getter
     @ToString
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor
     public static class Pacing {
 
         @SerializedName("NumberOfIterations")
@@ -94,7 +94,7 @@ public class RuntimeSettings {
 
         @Getter
         @ToString
-        @AllArgsConstructor(access = AccessLevel.PRIVATE)
+        @AllArgsConstructor
         public static class StartNewIteration {
 
             @SerializedName("Type")
@@ -103,7 +103,7 @@ public class RuntimeSettings {
             @SerializedName("DelayOfSeconds")
             private Double delaySeconds;
 
-            @AllArgsConstructor(access = AccessLevel.PRIVATE)
+            @AllArgsConstructor
             public enum Type {
                 @SerializedName("fixed interval")
                 FIXED_INTERVAL("fixed interval");
@@ -120,13 +120,13 @@ public class RuntimeSettings {
 
     @Getter
     @ToString
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor
     public static class ThinkTime {
 
         @SerializedName("Type")
         private Type type;
 
-        @AllArgsConstructor(access = AccessLevel.PRIVATE)
+        @AllArgsConstructor
         public enum Type {
             @SerializedName("replay")
             REPLAY("replay");

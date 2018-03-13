@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Scenario {
 
     @SerializedName("ID")
@@ -26,7 +26,7 @@ public class Scenario {
     @Getter
     @ToString
     @EqualsAndHashCode
-    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @NoArgsConstructor
     public static class Content {
 
         @SerializedName("Groups")
