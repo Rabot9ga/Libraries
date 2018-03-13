@@ -9,10 +9,10 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Test {
+public class Scenario {
 
     @SerializedName("ID")
-    private String id;
+    private Integer id;
 
     @SerializedName("Name")
     private String name;

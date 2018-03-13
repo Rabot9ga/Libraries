@@ -1,10 +1,14 @@
 package ru.sbt.util.pcaccessapi;
 
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.sbt.util.pcaccessapi.jsondto.Scenario;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+@Slf4j
 public class PCAccessImplTest {
     PCAccess pcAccess;
 
@@ -15,9 +19,12 @@ public class PCAccessImplTest {
 
     @Test
     public void testGetTestByID() throws Exception {
-        ru.sbt.util.pcaccessapi.jsondto.Test testByID = pcAccess.getTestByID("PPRB", "PPRB_ONTAR_UIP", 364);
+        int testId = 364;
 
-        assertNotNull(testByID, "testByID is null!");
+        Scenario scenario = pcAccess.getScenarioById("PPRB", "PPRB_ONTAR_UIP", testId);
+
+        assertNotNull(scenario, "scenario is null!");
+        assertEquals((int) scenario.getId(), testId, "id is not the same!");
     }
 
 }

@@ -8,7 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.sbt.util.pcaccessapi.dto.LoginData;
 import ru.sbt.util.pcaccessapi.jsondto.Action;
-import ru.sbt.util.pcaccessapi.jsondto.Test;
+import ru.sbt.util.pcaccessapi.jsondto.Scenario;
 import ru.sbt.util.pcaccessapi.json.ActionDeserializer;
 import ru.sbt.util.pcaccessapi.service.PerformanceCenterService;
 
@@ -31,11 +31,11 @@ public class PCAccessImpl implements PCAccess {
     }
 
     @Override
-    public Test getTestByID(String domainName, String projectName, int id) {
+    public Scenario getScenarioById(String domainName, String projectName, int id) {
 
-        Response<Test> testRs;
+        Response<Scenario> testRs;
         try {
-            testRs = service.getTest(domainName, projectName, id).execute();
+            testRs = service.getScenarioById(domainName, projectName, id).execute();
         } catch (IOException e) {
             throw new RuntimeException("Can not get getTestByID!", e);
         }
