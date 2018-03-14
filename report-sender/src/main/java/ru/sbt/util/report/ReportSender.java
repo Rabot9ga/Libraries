@@ -15,6 +15,7 @@ public class ReportSender {
     private static final SecureRandom randomUid = new SecureRandom();
 
 
+    @Deprecated
     public static void startTransaction(String scriptName, String uid) {
         String lowerCaseScriptName = scriptName.toLowerCase();
         Transaction transaction = new Transaction(
@@ -22,25 +23,19 @@ public class ReportSender {
                 uid,
                 System.currentTimeMillis());
         transactionMap.put(transaction.getNameAndId(), transaction);
-        log.info("put transaction - " + transaction + " in map");
-        log.info("map size - " + transactionMap.size());
     }
 
+    @Deprecated
     public static void successEndTransaction(String scriptName, String uid) {
         String lowerCaseScriptName = scriptName.toLowerCase();
         Transaction transaction = transactionMap.get(lowerCaseScriptName + uid);
-
         transaction.setEndTime(System.currentTimeMillis());
         transaction.setStatus(Status.SUCCESS);
-        log.info("send transaction - " + transaction + " in Influx");
-
         dao.sendToInflux(transaction);
-
         transactionMap.remove(transaction.getNameAndId());
-        log.info("transaction - " + transaction + " removed");
-        log.info("map size - " + transactionMap.size());
     }
 
+    @Deprecated
     public static void failEndTransaction(String scriptName, String uid) {
         String lowerCaseScriptName = scriptName.toLowerCase();
         Transaction transaction = transactionMap.get(lowerCaseScriptName + uid);
@@ -50,6 +45,7 @@ public class ReportSender {
         transactionMap.remove(transaction.getNameAndId());
     }
 
+    @Deprecated
     public static void notReceivedEndTransaction(String scriptName, String uid) {
         String lowerCaseScriptName = scriptName.toLowerCase();
         Transaction transaction = transactionMap.get(lowerCaseScriptName + uid);
@@ -92,6 +88,7 @@ public class ReportSender {
                 notReceived);
     }
 
+    @Deprecated
     public static void successEndTransaction(String scriptName, long startTime, String userId) {
         long endTime = System.currentTimeMillis();
         String lowerCaseScriptName = scriptName.toLowerCase();
@@ -104,6 +101,7 @@ public class ReportSender {
                 success);
     }
 
+    @Deprecated
     public static void failEndTransaction(String scriptName, long startTime, String userId) {
         long endTime = System.currentTimeMillis();
         String lowerCaseScriptName = scriptName.toLowerCase();
@@ -116,6 +114,7 @@ public class ReportSender {
                 error);
     }
 
+    @Deprecated
     public static void notReceivedEndTransaction(String scriptName, long startTime, String userId) {
         long endTime = System.currentTimeMillis();
         String lowerCaseScriptName = scriptName.toLowerCase();

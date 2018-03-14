@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 @Slf4j
 public class WithoutTransactionDdos {
@@ -62,7 +62,6 @@ public class WithoutTransactionDdos {
 
         Runnable task = () -> {
             String scriptName = Thread.currentThread().getName();
-            long userId = Thread.currentThread().getId();
             long start = System.currentTimeMillis();
             try {
                 Thread.sleep(15);
@@ -71,18 +70,16 @@ public class WithoutTransactionDdos {
             }
             switch (ThreadLocalRandom.current().nextInt(3) % 3) {
                 case 0:
-//                    ReportSender.successEndTransaction(scriptName, start, String.valueOf(userId));
                     ReportSender.successEndTransaction(scriptName, start, System.currentTimeMillis());
                     break;
                 case 1:
-//                    ReportSender.failEndTransaction(scriptName, start, String.valueOf(userId));
                     ReportSender.failEndTransaction(scriptName, start, System.currentTimeMillis());
                     break;
                 case 2:
-//                    ReportSender.notReceivedEndTransaction(scriptName, start, String.valueOf(userId));
                     ReportSender.notReceivedEndTransaction(scriptName, start, System.currentTimeMillis());
                     break;
             }
+            log.info("iteration - {}", countDownLatch.getCount());
             countDownLatch.countDown();
         };
 
