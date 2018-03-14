@@ -1,13 +1,12 @@
 package ru.sbt.util.pcaccessapi.jsondto;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
-@ToString
-@EqualsAndHashCode
+@Data
 @NoArgsConstructor
 public class Scenario {
 
@@ -23,16 +22,11 @@ public class Scenario {
     @SerializedName("Content")
     private Content content;
 
-    @Getter
-    @ToString
-    @EqualsAndHashCode
+    @Data
     @NoArgsConstructor
     public static class Content {
-
         @SerializedName("Groups")
         List<VuserGroup> vuserGroups;
-
     }
-
 }
 

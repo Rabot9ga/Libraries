@@ -19,12 +19,15 @@ public class PCAccessImplTest {
 
     @Test
     public void testGetTestByID() throws Exception {
-        int testId = 364;
+//        int testId = 364;
+        int testId = 368;
 
         Scenario scenario = pcAccess.getScenarioById("PPRB", "PPRB_ONTAR_UIP", testId);
 
-        assertNotNull(scenario, "scenario is null!");
+        System.out.println("scenario = " + scenario);
+
         assertEquals((int) scenario.getId(), testId, "id is not the same!");
+        assertNotNull(scenario, "scenario is null!");
     }
 
 }

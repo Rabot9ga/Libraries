@@ -1,12 +1,10 @@
 package ru.sbt.util.pcaccessapi.jsondto;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
+@Data
 public class RuntimeSettings {
 
     @SerializedName("Pacing")
@@ -21,9 +19,7 @@ public class RuntimeSettings {
     @SerializedName("Scheduler")
     private Scheduler scheduler;
 
-    @Getter
-    @ToString
-    @AllArgsConstructor
+    @Data
     public static class Log {
 
         @SerializedName("Type")
@@ -41,9 +37,7 @@ public class RuntimeSettings {
         @SerializedName("LogOptions")
         private Options options;
 
-        @Getter
-        @ToString
-        @AllArgsConstructor
+        @Data
         public static class Options {
 
             @SerializedName("Type")
@@ -81,9 +75,7 @@ public class RuntimeSettings {
         }
     }
 
-    @Getter
-    @ToString
-    @AllArgsConstructor
+    @Data
     public static class Pacing {
 
         @SerializedName("NumberOfIterations")
@@ -92,9 +84,7 @@ public class RuntimeSettings {
         @SerializedName("StartNewIteration")
         private StartNewIteration startNewIteration;
 
-        @Getter
-        @ToString
-        @AllArgsConstructor
+        @Data
         public static class StartNewIteration {
 
             @SerializedName("Type")
@@ -118,9 +108,7 @@ public class RuntimeSettings {
         }
     }
 
-    @Getter
-    @ToString
-    @AllArgsConstructor
+    @Data
     public static class ThinkTime {
 
         @SerializedName("Type")
