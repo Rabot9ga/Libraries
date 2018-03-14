@@ -43,8 +43,8 @@ public abstract class AbstractDBRepositoryTest {
         return JDBCPojoFactory.getPojo()
                 .addColumnId("id")
                 .addColumn("name", ColumnType.TEXT, UUID.randomUUID().toString())
-                .addColumn("column1", ColumnType.INTEGER, String.valueOf(ThreadLocalRandom.current().nextInt()))
-                .addColumn("column2", ColumnType.DOUBLE, String.valueOf(ThreadLocalRandom.current().nextDouble()))
+                .addColumn("Column1", ColumnType.INTEGER, String.valueOf(ThreadLocalRandom.current().nextInt()))
+                .addColumn("Column2", ColumnType.DOUBLE, String.valueOf(ThreadLocalRandom.current().nextDouble()))
                 .addColumn("column3", ColumnType.BIGINTEGER, String.valueOf(ThreadLocalRandom.current().nextLong()));
     }
 

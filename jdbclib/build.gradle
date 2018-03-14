@@ -1,4 +1,4 @@
-version '0.0.1'
+version '0.0.2-springFix'
 
 test {
     exclude('**/DatabaseInterface/**')
@@ -16,7 +16,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.24'
     compile 'org.postgresql:postgresql:42.2.1'
     compile 'com.zaxxer:HikariCP:2.7.7'
-    compile 'org.springframework:spring-jdbc:5.0.4.RELEASE'
+    compile 'org.springframework:spring-jdbc:3.2.10.RELEASE'
 
     testCompile 'ch.qos.logback:logback-classic:1.2.3'
 

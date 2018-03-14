@@ -10,5 +10,6 @@ rootProject.name = 'libraries'
 include 'concurrent_util'
 include 'jdbclib'
 include 'batcher'
+include 'report-sender'
 include 'PCAccessAPI'
 
