@@ -22,7 +22,7 @@ public class DataRs<T> {
 
     public static <T> DataRs<T> error(String errorMessage) {
         return DataRs.<T>builder()
-                .status(Status.SUCCESS)
+                .status(Status.ERROR)
                 .errorMessage(errorMessage)
                 .build();
     }

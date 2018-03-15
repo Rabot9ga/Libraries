@@ -49,7 +49,7 @@ public class PCAccessImplTest {
 
         DataRs<Run> dataRs = pcAccess.getRunById("PPRB", "PPRB_ONTAR_UIP", runId);
         assertNotNull(dataRs, "dataRs is null!");
-        assertTrue(dataRs.isSuccess(), "response is success");
+        assertFalse(dataRs.isSuccess(), "response is success");
         assertNull(dataRs.getPayload(), "payload is not null");
     }
 }
