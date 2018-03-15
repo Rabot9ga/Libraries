@@ -3,10 +3,11 @@ package ru.sbt.util.pcaccessapi;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ru.sbt.util.pcaccessapi.jsondto.Scenario;
+import ru.sbt.util.pcaccessapi.dto.DataRs;
+import ru.sbt.util.pcaccessapi.jsondto.run.Run;
+import ru.sbt.util.pcaccessapi.jsondto.scenario.Scenario;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.*;
 
 @Slf4j
 public class PCAccessImplTest {
@@ -19,15 +20,36 @@ public class PCAccessImplTest {
 
     @Test
     public void testGetTestByID() throws Exception {
-//        int testId = 364;
         int testId = 368;
 
-        Scenario scenario = pcAccess.getScenarioById("PPRB", "PPRB_ONTAR_UIP", testId);
+        DataRs<Scenario> dataRs = pcAccess.getScenarioById("PPRB", "PPRB_ONTAR_UIP", testId);
 
-        System.out.println("scenario = " + scenario);
-
-        assertEquals((int) scenario.getId(), testId, "id is not the same!");
-        assertNotNull(scenario, "scenario is null!");
+        assertNotNull(dataRs, "dataRs is null!");
+        assertTrue(dataRs.isSuccess(), "response is not success");
+        assertEquals((int) dataRs.getPayload().getId(), testId, "id is not the same!");
     }
 
+
+    @Test
+    public void testGetRunById() throws Exception {
+        int runId = 366;
+
+        DataRs<Run> dataRs = pcAccess.getRunById("PPRB", "PPRB_ONTAR_UIP", runId);
+
+        assertNotNull(dataRs.getPayload(), "dataRs is null!");
+        assertTrue(dataRs.isSuccess(), "response is not success");
+        assertEquals((int) dataRs.getPayload().getId(), 366, "run id is not equals");
+
+
+    }
+
+    @Test
+    public void testGetUnavailableRunId() throws Exception {
+        int runId = 986;
+
+        DataRs<Run> dataRs = pcAccess.getRunById("PPRB", "PPRB_ONTAR_UIP", runId);
+        assertNotNull(dataRs, "dataRs is null!");
+        assertTrue(dataRs.isSuccess(), "response is success");
+        assertNull(dataRs.getPayload(), "payload is not null");
+    }
 }

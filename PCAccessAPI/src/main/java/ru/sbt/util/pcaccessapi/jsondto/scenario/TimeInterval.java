@@ -1,4 +1,4 @@
-package ru.sbt.util.pcaccessapi.jsondto;
+package ru.sbt.util.pcaccessapi.jsondto.scenario;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

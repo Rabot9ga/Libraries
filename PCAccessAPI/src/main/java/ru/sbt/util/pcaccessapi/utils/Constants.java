@@ -18,5 +18,6 @@ public interface Constants {
     String COMMON_URI_PREFIX = "LoadTest/rest/domains/{" + PATH_DOMAIN_NAME + "}/projects/{" + PATH_PROJECT_NAME + "}";
 
     String URI_TEST = COMMON_URI_PREFIX + "/tests/{" + PATH_TEST_ID + "}";
+    String URI_RUN = COMMON_URI_PREFIX + "/Runs/{" + PATH_RUN_ID + "}/Extended";
     String URI_LOGIN = "LoadTest/rest/authentication-point/authenticate";
 }

@@ -12,4 +12,3 @@ include 'jdbclib'
 include 'batcher'
 include 'report-sender'
 include 'PCAccessAPI'
-

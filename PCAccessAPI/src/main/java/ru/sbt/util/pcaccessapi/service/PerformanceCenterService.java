@@ -5,15 +5,12 @@ import retrofit2.HttpException;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
-import ru.sbt.util.pcaccessapi.jsondto.Scenario;
+import ru.sbt.util.pcaccessapi.jsondto.run.Run;
+import ru.sbt.util.pcaccessapi.jsondto.scenario.Scenario;
 
 import static ru.sbt.util.pcaccessapi.utils.Constants.*;
 
 public interface PerformanceCenterService {
-
-    @GET("/LoadTest/rest/authentication-point/authenticate")
-    Call<Void> login();
-
 
     @GET(URI_TEST)
     @Headers({HEADER_ACCEPT_JSON})
@@ -21,5 +18,13 @@ public interface PerformanceCenterService {
             @Path(PATH_DOMAIN_NAME) String domainName,
             @Path(PATH_PROJECT_NAME) String projectName,
             @Path(PATH_TEST_ID) int testId)
+            throws HttpException;
+
+    @GET(URI_RUN)
+    @Headers({HEADER_ACCEPT_JSON})
+    Call<Run> getRunById(
+            @Path(PATH_DOMAIN_NAME) String domainName,
+            @Path(PATH_PROJECT_NAME) String projectName,
+            @Path(PATH_RUN_ID) int runId)
             throws HttpException;
 }
