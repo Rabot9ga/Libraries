@@ -13,6 +13,11 @@ public class Scheduler {
 
     @Data
     @EqualsAndHashCode(callSuper = false)
+    public class Action {
+    }
+
+    @Data
+    @EqualsAndHashCode(callSuper = false)
     public class StartGroup extends Action {
         @SerializedName("Type")
         private String type;

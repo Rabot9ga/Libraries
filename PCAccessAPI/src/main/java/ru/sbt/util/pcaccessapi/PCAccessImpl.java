@@ -12,8 +12,8 @@ import ru.sbt.util.pcaccessapi.dto.LoginData;
 import ru.sbt.util.pcaccessapi.json.ActionDeserializer;
 import ru.sbt.util.pcaccessapi.json.LocalDateDeserializer;
 import ru.sbt.util.pcaccessapi.jsondto.run.Run;
-import ru.sbt.util.pcaccessapi.jsondto.scenario.Action;
 import ru.sbt.util.pcaccessapi.jsondto.scenario.Scenario;
+import ru.sbt.util.pcaccessapi.jsondto.scenario.Scheduler;
 import ru.sbt.util.pcaccessapi.service.PerformanceCenterService;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class PCAccessImpl implements PCAccess {
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-mm-dd HH:mm:ss")
-                .registerTypeAdapter(Action.class, new ActionDeserializer())
+                .registerTypeAdapter(Scheduler.Action.class, new ActionDeserializer())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateDeserializer())
                 .create();
 
