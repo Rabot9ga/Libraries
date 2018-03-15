@@ -2,7 +2,10 @@ package ru.sbt.util.pcaccessapi;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 import ru.sbt.util.pcaccessapi.dto.LoginData;
 
 import java.io.IOException;
@@ -25,16 +28,19 @@ class PCAuthenticationInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         log.trace("Intercept!");
+// FIXME: 15.03.2018 Переписать логгирование
 
         if (!loginData.isLoginDataFilled()) {
+            log.trace("loginData is not filled, call auth:");
             authAndSaveCookie(chain);
             return sendPreparedRq(chain);
 
         } else {
             Response response = sendPreparedRq(chain);
 
-            if (!response.isSuccessful()){
-                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
+            if (!response.isSuccessful()) {
+                if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                    log.trace("response ");
                     authAndSaveCookie(chain);
                     return sendPreparedRq(chain);
                 }
@@ -50,14 +56,18 @@ class PCAuthenticationInterceptor implements Interceptor {
 
     private Response sendPreparedRq(Chain chain) throws IOException {
         Request request = chain.request();
+        log.trace("sendPreparedRq request: {}", request);
 
         Request newRequest = request.newBuilder()
                 .addHeader("Cookie", cookieJoin())
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Connection", "keep-alive")
                 .build();
+        log.trace("sendPreparedRq newRequest: {}", newRequest);
 
-        return chain.proceed(newRequest);
+        Response response = chain.proceed(newRequest);
+        log.trace("sendPreparedRq response: {}", response);
+        return response;
     }
 
     private void cookieParse(Response authenticateRs) {

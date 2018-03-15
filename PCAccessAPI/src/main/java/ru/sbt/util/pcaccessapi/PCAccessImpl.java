@@ -2,6 +2,7 @@ package ru.sbt.util.pcaccessapi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -14,12 +15,14 @@ import ru.sbt.util.pcaccessapi.json.LocalDateDeserializer;
 import ru.sbt.util.pcaccessapi.jsondto.run.Run;
 import ru.sbt.util.pcaccessapi.jsondto.scenario.Scenario;
 import ru.sbt.util.pcaccessapi.jsondto.scenario.Scheduler;
+import ru.sbt.util.pcaccessapi.jsondto.script.ScriptMetadata;
 import ru.sbt.util.pcaccessapi.service.PerformanceCenterService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class PCAccessImpl implements PCAccess {
 
     private PerformanceCenterService service;
@@ -59,6 +62,19 @@ public class PCAccessImpl implements PCAccess {
         } catch (IOException e) {
             throw new RuntimeException("Can not get getRunByID!", e);
         }
+    }
+
+    @Override
+    public DataRs<ScriptMetadata> getScriptMetadataById(String domainName, String projectName, int id) {
+        Response<ScriptMetadata> response;
+        try {
+            response = service.getScriptMetadataById(domainName, projectName, id).execute();
+            return analyzeResponse(response);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Can not get getRunByID!", e);
+        }
+
     }
 
     private <T> DataRs<T> analyzeResponse(Response<T> response) throws IOException {

@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.sbt.util.pcaccessapi.dto.DataRs;
 import ru.sbt.util.pcaccessapi.jsondto.run.Run;
 import ru.sbt.util.pcaccessapi.jsondto.scenario.Scenario;
+import ru.sbt.util.pcaccessapi.jsondto.script.ScriptMetadata;
 
 import static org.testng.Assert.*;
 
@@ -51,5 +52,15 @@ public class PCAccessImplTest {
         assertNotNull(dataRs, "dataRs is null!");
         assertFalse(dataRs.isSuccess(), "response is success");
         assertNull(dataRs.getPayload(), "payload is not null");
+    }
+
+    @Test
+    public void testGetScriptMetadata() throws Exception {
+        int scriptId = 329;
+
+        DataRs<ScriptMetadata> dataRs = pcAccess.getScriptMetadataById("PPRB", "PPRB_ONTAR_UIP", scriptId);
+        assertNotNull(dataRs, "dataRs is null!");
+        assertTrue(dataRs.isSuccess(), "response is success");
+        assertNotNull(dataRs.getPayload(), "payload is not null");
     }
 }
