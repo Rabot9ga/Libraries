@@ -75,12 +75,6 @@ public class PCAccessImpl implements PCAccess {
         }
     }
 
-
-    @Override
-    public void close() throws Exception {
-
-    }
-
     private PerformanceCenterService createRetrofit(String url) {
 
         OkHttpClient okhttp = new OkHttpClient.Builder()

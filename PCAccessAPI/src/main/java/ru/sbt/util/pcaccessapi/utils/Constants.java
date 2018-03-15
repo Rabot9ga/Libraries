@@ -20,4 +20,5 @@ public interface Constants {
     String URI_TEST = COMMON_URI_PREFIX + "/tests/{" + PATH_TEST_ID + "}";
     String URI_RUN = COMMON_URI_PREFIX + "/Runs/{" + PATH_RUN_ID + "}/Extended";
     String URI_LOGIN = "LoadTest/rest/authentication-point/authenticate";
+    String URI_LOGOUT = "LoadTest/rest/authentication-point/logout";
 }
