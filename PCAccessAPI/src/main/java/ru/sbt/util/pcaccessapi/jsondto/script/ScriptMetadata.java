@@ -9,20 +9,20 @@ public class ScriptMetadata {
 
     @Expose
     @SerializedName("ID")
-    private Integer ID;
+    private Integer id;
     @Expose
     @SerializedName("Name")
-    private String Name;
+    private String name;
     @Expose
     @SerializedName("CreatedBy")
-    private String CreatedBy;
+    private String createdBy;
     @Expose
     @SerializedName("TestFolderPath")
-    private String TestFolderPath;
+    private String testFolderPath;
     @Expose
     @SerializedName("Protocol")
-    private String Protocol;
+    private String protocol;
     @Expose
     @SerializedName("WorkingMode")
-    private String WorkingMode;
+    private String workingMode;
 }

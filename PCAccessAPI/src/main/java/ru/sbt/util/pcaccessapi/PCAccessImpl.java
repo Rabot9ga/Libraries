@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -93,8 +94,12 @@ public class PCAccessImpl implements PCAccess {
 
     private PerformanceCenterService createRetrofit(String url) {
 
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new Slf4jAdapter(PerformanceCenterService.class));
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient okhttp = new OkHttpClient.Builder()
                 .addInterceptor(new PCAuthenticationInterceptor(url, login, password, new LoginData()))
+                .addInterceptor(loggingInterceptor)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build();
 
