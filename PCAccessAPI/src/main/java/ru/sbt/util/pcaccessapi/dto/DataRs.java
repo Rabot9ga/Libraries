@@ -27,6 +27,15 @@ public class DataRs<T> {
                 .build();
     }
 
+    public static <T> DataRs<T> error(String errorMessage, Throwable t) {
+        String errorMessageRs = errorMessage + "\n" + t.toString();
+
+        return DataRs.<T>builder()
+                .status(Status.ERROR)
+                .errorMessage(errorMessageRs)
+                .build();
+    }
+
     public boolean isSuccess() {
         return status == Status.SUCCESS;
     }
