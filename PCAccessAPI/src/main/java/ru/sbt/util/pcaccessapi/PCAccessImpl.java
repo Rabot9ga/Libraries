@@ -48,7 +48,7 @@ public class PCAccessImpl implements PCAccess {
             return analyzeResponse(testRs);
 
         } catch (IOException e) {
-            return DataRs.error("Can not get getTestByID!: ", e);
+            return DataRs.error("Couldn't get getTestByID!: ", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class PCAccessImpl implements PCAccess {
             return analyzeResponse(response);
 
         } catch (IOException e) {
-            return DataRs.error("Can not get getRunByID!", e);
+            return DataRs.error("Couldn't get getRunByID!", e);
         }
     }
 
@@ -73,7 +73,7 @@ public class PCAccessImpl implements PCAccess {
             return analyzeResponse(response);
 
         } catch (IOException e) {
-            return DataRs.error("Can not get scriptMetadataByID!", e);
+            return DataRs.error("Couldn't get scriptMetadataByID!", e);
         }
 
     }
